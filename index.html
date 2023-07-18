@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Heroes in Disgrace</title>
+
+  <link rel="icon" href="assets/images/icons/red-star.png">
+  <link rel="stylesheet" href="stylesheet.css">
+
+  <script src="//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
+  <script type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/phaser-raycaster@0.10.6/dist/phaser-raycaster.min.js"></script>
+
+  <script src="https://code.jquery.com/jquery-3.5.0.js"></script> <!-- Need this to use ajax -->
+
+  <script type="text/javascript" src="js/database.js"></script>
+</head>
+
+<body onload="checkForUser()">
+  <div style="height: 100%;width:100%;display: flex;flex-direction: column;">
+    <div style="flex: 0;" id="navbar">
+      <nav>
+        <ul>
+          <li><a href="#" class="instructions" id="instructions"></a></li>
+          <li><a href="#" class="stats" id="stats"></a></li>
+          <li><a href="#" class="leaderboard" id="leaderboard"></a></li>
+          <!-- dynamic menu button -->
+          <li>
+            <div class="menu" id="menu" onclick="displayMenu(this)">
+              <div class="bar1"></div>
+              <div class="bar2"></div>
+              <div class="bar3"></div>
+            </div>
+            <div class="menu-items" id="menu-items" style="display: none;">
+              <a href="#" onclick="displaySubMenu(this, 'word-games-submenu')" id="word-games">Word Games &#9660</a>
+              <div class="submenu-items" id="word-games-submenu">
+                <a href="../squords">Squords</a>
+              </div>
+              <a href="#" onclick="displaySubMenu(this, 'music-games-submenu')" id="music-games">Music-Video-Games
+                &#9660</a>
+              <!-- <span style="color: rgb(204, 204, 204)">&#9660</span> -->
+              <div class="submenu-items" id="music-games-submenu">
+                <a href="../promises">Promises</a>
+                <a href="../heroes-in-disgrace">Heroes in Disgrace</a>
+              </div>
+              <!-- <a href="#" onclick="displaySubMenu(this, 'desktop-games-submenu')" id="desktop-games">Desktop Games
+                &#9660</a>
+              <div class="submenu-items" id="desktop-games-submenu">
+                <a href="#contact">OO</a>
+                <a href="#about">AA</a>
+              </div> -->
+            </div>
+          </li>
+          <!-- static menu button -->
+          <!-- <li><a href="#" class="menu" onclick="displayMenu()"></a>
+            <div class="menu-items" id="menu-items">
+              <a href="#news">News</a>
+              <button class="dropbtn" onclick="myFunction()">Dropdown
+                <i class="fa fa-caret-down"></i>
+              </button>
+              <a href="#contact">Contact</a>
+              <a href="#about">About</a>
+            </div>
+          </li> -->
+        </ul>
+      </nav>
+    </div>
+
+    <div id="phaser-app" style="flex:1; overflow: hidden;">
+      <script src="js/easystar-0.4.4.min.js"></script>
+      <script type="module" src="js/game.js"></script>
+    </div>
+
+    <script type="text/javascript">
+      // Close the dropdown if the user clicks outside of it
+      window.onmousedown = function (event) {
+        // This seems a bit clunky
+        if (!event.target.matches('div.bar1') && !event.target.matches('div.bar2') && !event.target.matches('div.bar3') && !event.target.matches('#menu') && !event.target.matches('div#menu-items') && !event.target.matches('div#menu-items a') && !event.target.matches('div#menu-items div') && !event.target.matches('div#menu-items div a')) {
+          // Only change the menu if it is open
+          if (document.getElementById("menu-items").style.display === "block") {
+            var menu = document.getElementById("menu");
+            displayMenu(menu);
+          }
+        }
+      }
+
+      function displayMenu(menu) {
+        var x = document.getElementById("menu-items");
+        if (x.style.display === "block") {
+          x.style.display = "none";
+        } else {
+          x.style.display = "block";
+        }
+
+        // This is a dumb way to do it, but it works
+        document.getElementById("word-games").innerHTML = "Word Games &#9660";
+        document.getElementById("music-games").innerHTML = "Music-Video-Games &#9660";
+        // document.getElementById("desktop-games").innerHTML = "Desktop Games &#9660";
+
+        document.getElementById("word-games-submenu").style.display = "none";
+        document.getElementById("music-games-submenu").style.display = "none";
+        // document.getElementById("desktop-games-submenu").style.display = "none";
+
+        menu.classList.toggle("change");
+      }
+
+      function displaySubMenu(menu, submenuId) {
+        var x = document.getElementById(submenuId);
+        if (x.style.display === "block") {
+          x.style.display = "none";
+          menu.innerHTML = menu.innerHTML.split(" ").slice(0, -1).join(" ") + " &#9660";
+        } else {
+          x.style.display = "block";
+          menu.innerHTML = menu.innerHTML.split(" ").slice(0, -1).join(" ") + " &#9650";
+        }
+      }
+    </script>
+</body>
+
+</html>
