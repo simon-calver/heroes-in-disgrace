@@ -1,0 +1,27 @@
+{
+  "name": "phaser-alien",
+  "version": "1.0.0",
+  "description": "Alien themed Phaser game",
+  "main": "game.js",
+  "scripts": {
+    "start": "parcel index.html --open",
+    "build": "parcel build index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/simon-calver/phaser-alien.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "phaser": "3.55.2"
+  },
+  "devDependencies": {
+    "parcel": "^2.2.1"
+  },
+  "bugs": {
+    "url": "https://github.com/simon-calver/phaser-alien/issues"
+  },
+  "homepage": "https://github.com/simon-calver/phaser-alien#readme"
+}

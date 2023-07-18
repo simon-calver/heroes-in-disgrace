@@ -1,0 +1,25 @@
+<link rel="stylesheet" href="stylesheet.css">
+
+<!-- <div style="pointer-events: auto; height: 350px"> -->
+
+<div class="game-instructions" id="highScores">
+  <!-- This is very hacky: onload can be run for images, so add a small image then immediately remove it. The script needs to be defined
+    in database.js, i.e. globally -->
+  <img src="pixel.png" alt="" onload="displayHighScores();this.parentNode.removeChild(this);" />
+
+  <!-- Put the table inside another table so it can be vertically aligned -->
+  <table>
+    <tr>
+      <td>
+        <table id="scoreBoard" class="scores">
+          <tr>
+            <th></th>
+            <th style="width:50%">Name</th>
+            <th>Score</th>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</div>
+<!-- </div> -->

@@ -1,0 +1,366 @@
+@font-face {
+  font-family: 'mont-heavy';
+  src: url('assets/fonts/mont-heavy/mont-heavy.woff2') format('woff2'),
+    url('assets/fonts/mont-heavy/mont-heavy/mont-heavy.woff') format('woff'),
+    url('assets/fonts/mont-heavy/mont-heavy/mont-heavy.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'mont-light';
+  src: url('assets/fonts/mont-light/mont-light.woff2') format('woff2'),
+    url('assets/fonts/mont-light/mont-light/mont-light.woff') format('woff'),
+    url('assets/fonts/mont-light/mont-light/mont-light.ttf') format('truetype');
+  font-weight: light;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'stranger';
+  src:
+    url('assets/fonts/stranger/stranger.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'blok';
+  src:
+    url('assets/fonts/blok/blok.ttf') format('truetype');
+  font-style: normal;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+  /* background-color: black; */
+  background: linear-gradient(to right, rgb(50, 50, 50), black, black, black, black, black, rgb(50, 50, 50));
+  font-family: 'mont-heavy';
+}
+
+nav {
+  background: linear-gradient(to right, rgb(50, 50, 50), black, black, black, black, black, rgb(50, 50, 50));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* -webkit-box-sizing: border-box;
+  box-sizing: border-box; */
+}
+
+nav ul {
+  list-style: none;
+  margin-left: -245px;
+  margin-top: -5px;
+  margin-bottom: -5px;
+  /* padding-left: 0px;
+  padding-right: 0px; */
+  /* -webkit-box-sizing: border-box;
+  box-sizing: border-box; */
+}
+
+nav li {
+  display: inline-block;
+  margin-left: -5px;
+  margin-right: -5px;
+  position: relative;
+  /* padding-left: 0px;
+  padding-right: 0px; */
+  /* -webkit-box-sizing: border-box;
+  box-sizing: border-box; */
+}
+
+nav li:last-child {
+  position: relative;
+  right: -195px;
+}
+
+/* nav a {
+  background-size: 50px 50px;
+  width: 50px;
+  height: 50px;
+  display: block;
+} */
+
+nav li.instructions {
+  background-image: url(assets/images/icons/question.png);
+  background-size: 50px 50px;
+  width: 50px;
+  height: 50px;
+  display: block;
+  /* scale: 0.5; */
+  /* -webkit-box-sizing: border-box;
+  box-sizing: border-box; */
+}
+
+nav li.stats {
+  background-image: url(assets/images/icons/star.png);
+  background-size: 50px 50px;
+  width: 50px;
+  height: 50px;
+  display: block;
+  /* scale: 0.5; */
+  /* border-left: 50px; */
+  /* -webkit-box-sizing: border-box;
+  box-sizing: border-box; */
+}
+
+nav li.leaderboard {
+  background-image: url(assets/images/icons/leaderboardsComplex.png);
+  background-size: 50px 50px;
+  width: 50px;
+  height: 50px;
+  display: block;
+  /* scale: 0.5; */
+}
+
+nav a.instructions {
+  background-image: url(assets/images/icons/question.png);
+  background-size: 50px 50px;
+  width: 50px;
+  height: 50px;
+  display: block;
+  /* scale: 0.5; */
+  /* -webkit-box-sizing: border-box;
+  box-sizing: border-box; */
+}
+
+nav a.stats {
+  background-image: url(assets/images/icons/star.png);
+  background-size: 50px 50px;
+  width: 50px;
+  height: 50px;
+  display: block;
+  /* scale: 0.5; */
+  /* border-left: 50px; */
+  /* -webkit-box-sizing: border-box;
+  box-sizing: border-box; */
+}
+
+nav a.leaderboard {
+  background-image: url(assets/images/icons/leaderboardsComplex.png);
+  background-size: 50px 50px;
+  width: 50px;
+  height: 50px;
+  display: block;
+  /* scale: 0.5; */
+}
+
+.menu {
+  cursor: pointer;
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* nav a.menu {
+  background-image: url(assets/images/icons/barsHorizontal.png);
+  width: 50px;
+  height: 50px;
+  display: block;
+} */
+
+.menu-items {
+  position: absolute;
+  background-color: black;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(255, 255, 255, 0.2);
+  z-index: 1;
+  display: block;
+  right: 0;
+}
+
+/* Links inside the dropdown */
+.menu-items a {
+  float: none;
+  color: white;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: flex;
+  text-align: left;
+}
+
+.submenu-items {
+  background-color: rgb(37, 37, 37);
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(255, 255, 255, 0.2);
+  z-index: 1;
+  display: block;
+  right: 0;
+}
+
+.submenu-items a {
+  float: none;
+  color: white;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: flex;
+  text-align: left;
+}
+
+.bar1,
+.bar2,
+.bar3 {
+  width: 35px;
+  height: 6px;
+  background-color: white;
+  margin: 6px 0px;
+  transition: 0.4s;
+  /* shape-outside: polygon( */
+}
+
+/* Rotate first bar */
+.change .bar1 {
+  transform: translate(0, 13.5px) rotate(-45deg);
+  height: 9px;
+  /* margin: 4px 0px; */
+  clip-path: polygon(88% 0%, 100% 50%, 88% 100%, 12% 100%, 0 50%, 12% 0);
+}
+
+/* Fade out the second bar */
+.change .bar2 {
+  opacity: 0;
+}
+
+/* Rotate last bar */
+.change .bar3 {
+  transform: translate(0, -13.5px) rotate(45deg);
+  height: 9px;
+  /* margin: 4px 0px; */
+  clip-path: polygon(88% 0%, 100% 50%, 88% 100%, 12% 100%, 0 50%, 12% 0);
+}
+
+.game-instructions {
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* flex-wrap: wrap; */
+  /* row-gap: 10px; */
+  /* align-items: center; */
+  color: white;
+  font-family: 'mont-heavy';
+  /* text-align: left; */
+  font-size: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+  overflow-y: auto;
+  /* height: 350px; */
+  /* align-items: center; */
+}
+
+table.scores,
+table.scores th,
+table.scores td {
+  /* border: 8px solid rgb(31, 30, 30); */
+  text-align: left;
+  font-size: 20px;
+  border: none;
+}
+
+table.scores th {
+  position: sticky;
+  top: 0;
+  background: rgb(31, 30, 30);
+  height: 30px;
+  /* border: 8px solid rgb(31, 30, 30); */
+}
+
+table.scores {
+  table-layout: fixed;
+  width: 100%;
+  border: none;
+}
+
+#form-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  row-gap: 10px;
+  column-gap: 20px;
+  align-items: center;
+}
+
+#form-wrapper input {
+  display: block;
+}
+
+input[type=text] {
+  width: 200px;
+  /* font-family: 'mont-heavy'; */
+  font-family: 'blok';
+  font-size: 30px;
+  text-align: center;
+  color: rgb(255, 255, 255);
+  background-color: rgb(31, 30, 30);
+  /* pattern="[A-Za-z0-9]{1,10}" */
+  /* border: none; */
+  /* on-keypress: "return event.keyCode != 13"; */
+}
+
+input[type=button] {
+  /* font-family: 'mont-light'; */
+  font-family: 'blok';
+  /* color: rgb(29, 194, 29); */
+  background-color: rgb(31, 30, 30);
+}
+
+.smallButton {
+  width: 100px;
+  font-size: 26px;
+}
+
+.bigButton {
+  width: 120px;
+  font-size: 30px;
+  /* border: none; */
+  /* font-family: 'mont-light'; */
+  color: rgb(255, 255, 255);
+}
+
+/* Use this to shake input when text is invalid */
+.error {
+  position: relative;
+  animation: shake .1s linear;
+  animation-iteration-count: 3;
+}
+
+@keyframes shake {
+  0% {
+    left: -5px;
+  }
+
+  100% {
+    right: -5px;
+  }
+}
+
+/* img {
+  margin: auto;
+  display: block;
+  width: 250px;
+  height: auto
+} */
+
+/* #instructions input {
+  display: block;
+} */
+
+
+/* Designing for scroll-bar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: gainsboro;
+  border-radius: 5px;
+  box-shadow: inset 0 0 5px grey;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: black;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
