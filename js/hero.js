@@ -50,16 +50,11 @@ class Hero extends Phaser.Physics.Arcade.Sprite {
     this.get
     if (Phaser.Math.Distance.BetweenPoints(this.getPosition(), this.path[0]) < 10) {
       this.path.shift();
-      // this.timeLastTargetReached = currentTime;
-
-      // this.isFleeing = false;  // where to put this??
     }
-    // Do something whenreach the end of the path
+
+    // Stop moving if we have reached the end of the path
     if (this.path.length === 0) {
-      // console.log('path empty');
       this.setVelocity(0);
-      // this.isMoving = false;
-      // this.setNewPath();
     }
 
     if (this.targetAngle > -Math.PI / 4 && this.targetAngle < Math.PI / 4) {

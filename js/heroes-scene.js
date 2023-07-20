@@ -20,7 +20,7 @@ export default class HeroesScene extends Phaser.Scene {
     this.load.spritesheet('player-idle', 'assets/sprites/player-idle.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('player-death', 'assets/sprites/player-death.png', { frameWidth: 64, frameHeight: 64 });
 
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 8; i++) {
       this.load.spritesheet('hero-' + i + '-walk', 'assets/sprites/hero-' + i + '-walk.png', { frameWidth: 64, frameHeight: 64 });
       this.load.spritesheet('hero-' + i + '-idle', 'assets/sprites/hero-' + i + '-idle.png', { frameWidth: 64, frameHeight: 64 });
     }
@@ -181,7 +181,7 @@ export default class HeroesScene extends Phaser.Scene {
     }
 
     // Hero animations
-    for (var i = 0; i < 6; i++) {
+    for (var i = 0; i < 8; i++) {
       for (var j = 0; j < direction.length; j++) {
         this.anims.create({
           key: `hero-${i}-walk-${direction[j]}`,
@@ -461,7 +461,7 @@ export default class HeroesScene extends Phaser.Scene {
       this.heroes.get(1, 1, 0);
     }
 
-    var heroIds = [0, 1, 2, 3, 4, 5];
+    var heroIds = [0, 1, 2, 3, 4, 5, 6, 7];
     heroIds = Phaser.Utils.Array.Shuffle(heroIds);
 
     this.heroes.children.iterate(function (child, index) {
@@ -495,7 +495,6 @@ export default class HeroesScene extends Phaser.Scene {
     }
   }
 
-
   hitPlayer() {
     this.player.loseHealth();
   }
@@ -505,7 +504,7 @@ export default class HeroesScene extends Phaser.Scene {
   }
 
   addHeroes(rooms, tileSize) {
-    var heroIds = [0, 1, 2, 3, 4, 5];
+    var heroIds = [0, 1, 2, 3, 4, 5, 6, 7];
     heroIds = Phaser.Utils.Array.Shuffle(heroIds);
     var index = 0;
     for (var i = 0; i < this.level + 3; i++) {

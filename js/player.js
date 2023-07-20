@@ -33,6 +33,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.health = 3;
     this.isDying = false;
 
+    this.setDepth(10);
+
     // this.score = 0;
   }
 
