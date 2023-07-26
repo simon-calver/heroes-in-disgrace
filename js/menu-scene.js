@@ -53,7 +53,6 @@ export default class menuScene extends Phaser.Scene {
 
   setBodyText(menuType) {
     let { width, height } = this.sys.game.canvas;
-    console.log(height)
     let lineHeight = 100;
     switch (menuType) {
       case 'how_to_play':
