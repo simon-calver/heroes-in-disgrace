@@ -28,7 +28,7 @@ class Hero extends Phaser.Physics.Arcade.Sprite {
     // console.log(this.path);
     this.speed = 160;
     // console.log('speed', this.randomTarget());
-    this.hasMetPlayer = false;
+    // this.hasMetPlayer = false;
     this.inDisgrace = false;
     this.returningHome = false;
     this.isWaiting = false;
@@ -55,6 +55,9 @@ class Hero extends Phaser.Physics.Arcade.Sprite {
     // Stop moving if we have reached the end of the path
     if (this.path.length === 0) {
       this.setVelocity(0);
+      if (this.returningHome) {
+        this.homeReached();
+      }
     }
 
     if (this.targetAngle > -Math.PI / 4 && this.targetAngle < Math.PI / 4) {
@@ -78,15 +81,15 @@ class Hero extends Phaser.Physics.Arcade.Sprite {
   }
 
   setNewPath() {
-    if (this.returningHome) {
-      this.homeReached();
+    // if (this.returningHome) {
+    // this.homeReached();
+    // } else {
+    if (this.inDisgrace) {
+      this.getPath(this.scene.player.getCenter());
     } else {
-      if (this.inDisgrace) {
-        this.getPath(this.scene.player.getCenter());
-      } else {
-        this.getPath(this.randomTarget());
-      }
+      this.getPath(this.randomTarget());
     }
+    // }
     // if (this.hasMetPlayer) {
     //   this.resetMetPlayer();
     // } else {
@@ -190,8 +193,11 @@ class Hero extends Phaser.Physics.Arcade.Sprite {
   }
 
   meetPlayer() {
-    this.hasMetPlayer = true;
-    this.isWaiting = true;
+    this.returningHome = true;
+
+
+    // this.hasMetPlayer = true;
+    // this.isWaiting = true;
     this.speed = 300;
     this.resetPath();
 
@@ -199,36 +205,49 @@ class Hero extends Phaser.Physics.Arcade.Sprite {
     // this.speechBubble();
 
     // Pause before moving again
-    this.setVelocity(0);
-    this.scene.time.delayedCall(1000, this.returnHome, [], this);
+    // this.setVelocity(0);
+    this.pauseMovement();
+    this.getPath(this.home);
+    // this.returnHome
+    // this.scene.time.delayedCall(1000, this.returnHome, [], this);
+    // this.scene.time.delayedCall(1000, this.getPath, [this.home], this);
 
     if (this.inDisgrace) {
       return 0;
     } else {
-      const currentVal = this.value; //.valueOf();
-      // console.log('current val', currentVal);
-      // console.log('new value', Math.ceil(this.value / 2));
+      const currentVal = this.value;
       this.value = Math.ceil(this.value / 2);
       displayScore(this.scene, this.x, this.y, currentVal, 0);
       return currentVal;
     }
   }
 
-  returnHome() {
-    this.isWaiting = false;
-    this.returningHome = true;
-    this.getPath(this.home);
+  pauseMovement() {
+    this.isWaiting = true;
+    this.setVelocity(0);
+    this.scene.time.delayedCall(1000, this.resumeMovement, [], this);
   }
+
+  resumeMovement() {
+    this.isWaiting = false;
+  }
+
+  // returnHome() {
+  //   // this.isWaiting = false;
+  //   this.returningHome = true;
+  //   this.getPath(this.home);
+  // }
 
   homeReached() {
     this.returningHome = false;
-    this.hasMetPlayer = false;
-    if (this.scene.chorus) {
-      this.disgrace();
-    } else {
-      this.switchState();
-    }
-    // console.log(this.scene.chorus);
+    // this.hasMetPlayer = false;
+    // Always disgrace the hero when they return home
+    this.disgrace();
+    // if (this.scene.chorus) {
+    //   this.disgrace();
+    // } else {
+    //   this.switchState();
+    // } 
   }
 
   setHome(x, y) {
@@ -263,11 +282,12 @@ class Hero extends Phaser.Physics.Arcade.Sprite {
   }
 
   disgrace() {
+    this.resetPath();
     this.inDisgrace = true;
     // this.value = 0 //-100;
     // do better than a tint!
     this.setTint(0xff6666);
-    this.speed = 160;
+    this.speed = 170;
     // lyd
     // igg
     // kan
@@ -280,11 +300,15 @@ class Hero extends Phaser.Physics.Arcade.Sprite {
   }
 
   revertDisgrace() {
+    this.isWaiting = true;
     this.inDisgrace = false;
+    this.returningHome = false;
+    this.resetPath();
     // this.value = 10;
     this.clearTint();
     // this.resetOnMeet = false; // The delayed call in meetPlayer may call disgrace() soon after this is called, use the flag to stop that
     this.speed = 160;
+    this.isWaiting = false;
   }
 
   switchState() {
@@ -298,7 +322,7 @@ class Hero extends Phaser.Physics.Arcade.Sprite {
   reset() {
     this.value = 10;
     this.resetPath();
-    this.hasMetPlayer = false;
+    // this.hasMetPlayer = false;
     this.returningHome = false;
     this.isWaiting = false;
     this.revertDisgrace();

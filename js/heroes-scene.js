@@ -126,7 +126,7 @@ export default class HeroesScene extends Phaser.Scene {
   }
 
   setupEvents() {
-    eventsCentre.on('big-star-collected', this.revertHeroes, this); // needs to interupt run
+    eventsCentre.on('big-star-collected', this.collectBigStar, this); // needs to interupt run
     eventsCentre.on('bonus-1-collected', this.bonus1Collected, this);
     eventsCentre.on('player-death', this.playerDeath, this);
     eventsCentre.on('health-collected', this.healPlayer, this);
@@ -143,6 +143,25 @@ export default class HeroesScene extends Phaser.Scene {
           child.body.setSize(128, 128, true);
       });
     }, [], this);
+
+  }
+
+  collectBigStar(player, token) {
+    // Revert heroes if not in chorus, else make them pause for a bit
+    if (this.chorus) {
+      this.heroes.children.iterate(function (child) {
+        child.pauseMovement();
+      });
+    } else {
+      this.revertHeroes();
+
+
+      // this.time.delayedCall(4000, function () {
+      //   this.heroes.children.iterate(function (child) {
+      //     child.resume();
+      //   });
+      // }, [], this);
+    }
 
   }
 
@@ -255,9 +274,9 @@ export default class HeroesScene extends Phaser.Scene {
   }
 
   endChorus() {
+    this.chorus = false;
     this.revertHeroes();
     this.cameras.main.zoomTo(0.8, 1000);
-    this.chorus = false;
   }
 
   getSongPercent() {
@@ -480,7 +499,7 @@ export default class HeroesScene extends Phaser.Scene {
   }
 
   meetHero(player, hero) {
-    if (!hero.hasMetPlayer) {
+    if (!hero.returningHome) {
       if (hero.inDisgrace) {
         this.hitPlayer();
       } else if (hero.value == 10) {
@@ -521,6 +540,21 @@ export default class HeroesScene extends Phaser.Scene {
   }
 
   revertHeroes() {
+    // If in the chorus only revert half of the heroes
+    // if (this.chorus) {
+    //   var numHeroes = this.heroes.countActive(true);
+    //   var numToRevert = Math.floor(numHeroes / 2);
+    //   var heroes = Phaser.Utils.Array.Shuffle(this.heroes.children.entries);
+    //   for (let i = 0; i < numToRevert; i++) {
+    //     heroes[i].revertDisgrace();
+    //   }
+    // } else {
+    //   for (let hero of this.heroes.children.entries) {
+    //     hero.revertDisgrace();
+    //   }
+    // }
+
+    // if (this.chorus) return;
     for (let hero of this.heroes.children.entries) {
       hero.revertDisgrace();
     }
@@ -528,6 +562,7 @@ export default class HeroesScene extends Phaser.Scene {
 
   disgraceHeroes() {
     for (let hero of this.heroes.children.entries) {
+      // hero.resetPath();
       hero.disgrace();
     }
   }
@@ -535,7 +570,7 @@ export default class HeroesScene extends Phaser.Scene {
   playerDeath() {
     console.log("Player died at " + this.song.seek);
 
-    const pointsLost = Math.floor(0.2 * this.getScore()) + 5;
+    const pointsLost = Math.min(Math.floor(0.2 * this.getScore()) + 5, this.getScore());
     displayScore(this, this.player.x, this.player.y, -pointsLost, 0);
     console.log("Points lost: " + pointsLost);
     this.scores.push([this.song.seek, this.getScore() - pointsLost]);
