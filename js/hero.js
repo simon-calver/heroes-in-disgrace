@@ -319,13 +319,14 @@ class Hero extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
-  reset() {
+  reset(revertDisgrace = true) {
     this.value = 10;
     this.resetPath();
-    // this.hasMetPlayer = false;
     this.returningHome = false;
     this.isWaiting = false;
-    this.revertDisgrace();
+    if (revertDisgrace) {
+      this.revertDisgrace();
+    }
   }
 
   // resetMetPlayer() {

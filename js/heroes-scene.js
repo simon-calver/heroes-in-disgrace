@@ -475,7 +475,6 @@ export default class HeroesScene extends Phaser.Scene {
 
   resetHeroes(rooms) {
     // Reset heroes, is it better to clear the group and rebuild or just reset each one?
-
     if (this.level < 4) {
       this.heroes.get(1, 1, 0);
     }
@@ -484,15 +483,16 @@ export default class HeroesScene extends Phaser.Scene {
     heroIds = Phaser.Utils.Array.Shuffle(heroIds);
 
     this.heroes.children.iterate(function (child, index) {
-      child.reset();
+      // If the level changes during the chorus then the heroes will be in disgrace
+      const revertDisgrace = !this.chorus;
+      child.reset(revertDisgrace);
       let x = (rooms[index].corner.x + 0.5) * TILE_SIZE;
       let y = (rooms[index].corner.y + 0.5) * TILE_SIZE;
       child.setHome(x, y);
       child.setPosition(x, y);
 
       child.textureId = heroIds[index % heroIds.length];
-
-    });
+    }, this);
     this.heroesMet = 0;
     this.totalHeroes = this.countHeroes();
     this.updateHeroCount();
@@ -503,7 +503,6 @@ export default class HeroesScene extends Phaser.Scene {
       if (hero.inDisgrace) {
         this.hitPlayer();
       } else if (hero.value == 10) {
-
         this.heroesMet++;
         this.updateHeroCount();
         this.checkForLevelCompletion();
