@@ -149,10 +149,10 @@ function displayHighScores() {
   })
 
   const offsetHeight = document.getElementById('phaser-app').offsetHeight;
-  //Do pop up notification to show this value
-  alert(offsetHeight);
+  //Do pop up notification to show this value (for testing)
+  // alert(offsetHeight);
 
-  document.getElementById('highScores').setAttribute("style", `height: ${offsetHeight - 180}px;`)
+  document.getElementById('highScores').setAttribute("style", `height: ${offsetHeight - 210}px;`)
 
   // $.ajax({
   //   type: 'GET',
