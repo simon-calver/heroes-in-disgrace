@@ -10,7 +10,7 @@ class Hero extends Phaser.Physics.Arcade.Sprite {
     this.setDrag(1000, 1000);
     this.setAngularDrag(100);
 
-    this.body.setSize(24, 32, true);
+    this.body.setSize(24, 28, true);
     this.body.setOffset(22, 28);
 
     // this.homeX = x;
@@ -287,7 +287,7 @@ class Hero extends Phaser.Physics.Arcade.Sprite {
     // this.value = 0 //-100;
     // do better than a tint!
     this.setTint(0xff6666);
-    this.speed = 170;
+    this.speed = 230;
     // lyd
     // igg
     // kan

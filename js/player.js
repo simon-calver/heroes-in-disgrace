@@ -20,7 +20,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     // this.body.setSize(12, 16, true); // Set size smaller than sprite so it overlaps things behind it. Can this be done another way?
     // this.body.setOffset(12, 14);
 
-    this.body.setSize(24, 32, true); // Set size smaller than sprite so it overlaps things behind it. Can this be done another way?
+    this.body.setSize(24, 28, true); // Set size smaller than sprite so it overlaps things behind it. Can this be done another way?
     this.body.setOffset(22, 28);
 
     this.isMoving = false;
