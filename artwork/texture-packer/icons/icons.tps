@@ -200,6 +200,7 @@
             </struct>
             <key type="filename">facebook.png</key>
             <key type="filename">instagram.png</key>
+            <key type="filename">merch.png</key>
             <key type="filename">spotify.png</key>
             <key type="filename">twitter.png</key>
             <key type="filename">youtube.png</key>
@@ -236,6 +237,7 @@
             <filename>audioOn.png</filename>
             <filename>loading.png</filename>
             <filename>leaderboardsComplex.png</filename>
+            <filename>merch.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
