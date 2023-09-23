@@ -340,9 +340,10 @@ export default class PlayerScene extends Phaser.Scene {
         }
       }
 
-      this.instagramButton.destroy();
-      this.twitterButton.destroy();
+      this.amazonButton.destroy();
       this.spotifyButton.destroy();
+      this.instagramButton.destroy();
+      // this.twitterButton.destroy();
     }
   }
 
@@ -484,19 +485,23 @@ export default class PlayerScene extends Phaser.Scene {
     let { width, height } = this.sys.game.canvas;
 
     let iconWidth = 60;
-    scene.instagramButton = scene.add.image(width - 10, height - bottomHeight, 'icons', 'instagram.png').setScale(0.75).setOrigin(1, 1).setInteractive({ cursor: 'pointer' }).setDepth(1001);
-    scene.twitterButton = scene.add.image(width - iconWidth - 10, height - bottomHeight, 'icons', 'twitter.png').setScale(0.75).setOrigin(1, 1).setInteractive({ cursor: 'pointer' }).setDepth(1001);
-    scene.spotifyButton = scene.add.image(width - 2 * iconWidth - 10, height - bottomHeight, 'icons', 'spotify.png').setScale(0.75).setOrigin(1, 1).setInteractive({ cursor: 'pointer' }).setDepth(1001);
+    scene.amazonButton = scene.add.image(width - 10, height - bottomHeight, 'icons', 'merch.png').setScale(0.75).setOrigin(1, 1).setInteractive({ cursor: 'pointer' }).setDepth(1001);
+    scene.spotifyButton = scene.add.image(width - iconWidth - 10, height - bottomHeight, 'icons', 'spotify.png').setScale(0.75).setOrigin(1, 1).setInteractive({ cursor: 'pointer' }).setDepth(1001);
+    scene.instagramButton = scene.add.image(width - 2 * iconWidth - 10, height - bottomHeight, 'icons', 'instagram.png').setScale(0.75).setOrigin(1, 1).setInteractive({ cursor: 'pointer' }).setDepth(1001);
+    // scene.twitterButton = scene.add.image(width - 3 * iconWidth - 10, height - bottomHeight, 'icons', 'twitter.png').setScale(0.75).setOrigin(1, 1).setInteractive({ cursor: 'pointer' }).setDepth(1001);
 
-    scene.instagramButton.on('pointerdown', () => {
-      this.openExternalLink('https://www.instagram.com/killer_kowalski__/');
-    }, this);
-    scene.twitterButton.on('pointerdown', () => {
-      this.openExternalLink('https://twitter.com/killr_kowalski');
+    scene.amazonButton.on('pointerdown', () => {
+      this.openExternalLink('https://www.amazon.co.uk/s?rh=n%3A83450031%2Cp_4%3AKiller+Kowalski&ref=bl_sl_s_ap_web_83450031');
     }, this);
     scene.spotifyButton.on('pointerdown', () => {
       this.openExternalLink('https://open.spotify.com/artist/2PTSdpJctTWVACJdocakWe');
     }, this);
+    scene.instagramButton.on('pointerdown', () => {
+      this.openExternalLink('https://www.instagram.com/killer_kowalski__/');
+    }, this);
+    // scene.twitterButton.on('pointerdown', () => {
+    //   this.openExternalLink('https://twitter.com/killr_kowalski');
+    // }, this);
   }
 
   openExternalLink(url) {
