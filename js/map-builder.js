@@ -328,7 +328,7 @@ class MapBuilder {
       height: mazeHeight
     });
 
-    const tileset = map.addTilesetImage('tiles', null, 16, 16, 1, 2); // last two arguments are margin & padding
+    const tileset = map.addTilesetImage('tiles', null, 64, 64, 4, 8); // last two arguments are margin & padding
     const layer = map.createBlankLayer('mainLayer', tileset);
 
     for (let i = 0; i < mazeWidth; i++) {

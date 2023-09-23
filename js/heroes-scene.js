@@ -443,7 +443,7 @@ export default class HeroesScene extends Phaser.Scene {
         this.scores.push([this.song.seek, this.getScore() + bonusPoints]);
         this.updateScoreText();
       }
-    }  
+    }
   }
 
   checkForLevelCompletion() {
