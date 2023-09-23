@@ -1,8 +1,8 @@
-function displayScore(scene, x, y, score, delay = 0) {
+function displayScore(scene, x, y, score, delay = 0, prefix = '') {
   if (score == 0) {
     return;
   }
-  var text = score > 0 ? `+${score}` : `${score}`;
+  var text = prefix + (score > 0 ? `+${score}` : `${score}`);
   var bmt = scene.add.bitmapText(x, y, 'heroes-font', text, 42).setOrigin(0.5, 0.5).setTint(0xffff00).setDepth(20).setVisible(false);
 
   scene.tweens.addCounter({

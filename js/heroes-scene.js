@@ -63,7 +63,7 @@ export default class HeroesScene extends Phaser.Scene {
     this.player = new Player(this, (2 * Math.floor(MAP_WIDTH / 2) + 0.5) * TILE_SIZE, (2 * Math.floor(MAP_HEIGHT / 2) + 0.5) * TILE_SIZE, 'walk')
     this.playerScene = this.scene.get('PlayerScene');
 
-    this.tokens = this.physics.add.group({ classType: ScoreToken, runChildUpdate: true, maxSize: 200 });
+    this.tokens = this.physics.add.group({ classType: ScoreToken, runChildUpdate: true, maxSize: 100 });
     this.heroes = this.physics.add.group({ classType: Hero, runChildUpdate: true, maxSize: 8 });
 
     this.addTokens(MAP_WIDTH, MAP_HEIGHT, TILE_SIZE);
@@ -115,11 +115,12 @@ export default class HeroesScene extends Phaser.Scene {
 
     this.tokensCollected = 0;
     this.totalTokens = this.countTokens();
+    this.tokensRequired = 50;
     this.heroesMet = 0;
     this.totalHeroes = this.countHeroes();
 
     this.scene.launch('UIScene', {
-      player: this.player, totalTokens: this.totalTokens, totalHeroes: this.totalHeroes
+      player: this.player, totalTokens: this.tokensRequired, totalHeroes: this.totalHeroes
     });
 
     this.chorus = false;
@@ -388,7 +389,7 @@ export default class HeroesScene extends Phaser.Scene {
   countTokens() {
     let count = 0;
     this.tokens.children.iterate(function (child) {
-      if (child.tokenType == 'small-star') {
+      if ((child.tokenType == 'small-star') || (child.tokenType == 'big-star')) {
         count++;
       }
     });
@@ -429,15 +430,24 @@ export default class HeroesScene extends Phaser.Scene {
     this.scores.push([this.song.seek, this.getScore() + token.collect()]);
     this.updateScoreText();
 
-    if (token.tokenType == 'small-star') {
+    if ((token.tokenType == 'small-star') || (token.tokenType == 'big-star')) {
       this.tokensCollected++;
       this.updateTokenCount();
       this.checkForLevelCompletion();
-    }
+
+      // Add bonus points for collecting all tokens
+      if (this.tokensCollected == this.totalTokens) {
+        const bonusPoints = 10;
+        displayScore(this, this.player.x, this.player.y, bonusPoints, 0.5, 'Bonus: ');
+
+        this.scores.push([this.song.seek, this.getScore() + bonusPoints]);
+        this.updateScoreText();
+      }
+    }  
   }
 
   checkForLevelCompletion() {
-    if (this.tokensCollected >= this.totalTokens && this.heroesMet >= this.totalHeroes) {
+    if (this.tokensCollected >= this.tokensRequired && this.heroesMet >= this.totalHeroes) {
       this.nextLevel();
     }
   }
