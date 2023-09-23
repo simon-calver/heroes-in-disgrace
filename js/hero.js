@@ -13,30 +13,21 @@ class Hero extends Phaser.Physics.Arcade.Sprite {
     this.body.setSize(24, 28, true);
     this.body.setOffset(22, 28);
 
-    // this.homeX = x;
-    // this.homeY = y;
-
     this.home = new Phaser.Math.Vector2(x, y);
     this.path = [];
-    // 
-    // this.target = new Phaser.Math.Vector2(100, 100);
+
     const rand = this.randomTarget();
-    // console.log('path', rand);
-    // console.log('point', this.worldPosToTile(rand.x, rand.y));
     this.getPath(rand);
-    // console.log('path', this.path);
-    // console.log(this.path);
+    
     this.speed = 160;
-    // console.log('speed', this.randomTarget());
-    // this.hasMetPlayer = false;
+    
     this.inDisgrace = false;
     this.returningHome = false;
     this.isWaiting = false;
-    // this.resetOnMeet = true;
-
-    this.direction = 'left'; // # jacko opposite!
+    
+    this.direction = 'left'; 
     this.textureId = textureId;
-    this.value = 10 //50;
+    this.value = 10;
   }
 
   moveToTarget(currentTime) {
@@ -47,7 +38,6 @@ class Hero extends Phaser.Physics.Arcade.Sprite {
     this.setVelocityY(this.speed * Math.sin(this.targetAngle));
 
     // Remove this path element once we are sufficiently close to it (10 is a bit arbitrary but works well enough for now)
-    this.get
     if (Phaser.Math.Distance.BetweenPoints(this.getPosition(), this.path[0]) < 10) {
       this.path.shift();
     }
@@ -61,18 +51,17 @@ class Hero extends Phaser.Physics.Arcade.Sprite {
     }
 
     if (this.targetAngle > -Math.PI / 4 && this.targetAngle < Math.PI / 4) {
-      this.direction = 'right'; // this.textureId === 2 ? 'left' : 'right';
+      this.direction = 'right'; 
     } else if (this.targetAngle > Math.PI / 4 && this.targetAngle < 3 * Math.PI / 4) {
-      this.direction = 'down'; // this.textureId === 2 ? 'up' : 'down';
+      this.direction = 'down'; 
     } else if (this.targetAngle > -3 * Math.PI / 4 && this.targetAngle < -Math.PI / 4) {
-      this.direction = 'up'; // this.textureId === 2 ? 'down' : 'up';
+      this.direction = 'up'; 
     } else {
-      this.direction = 'left'; // this.textureId === 2 ? 'right' : 'left';
+      this.direction = 'left'; 
     }
   }
 
   getPosition() {
-    // return new Phaser.Math.Vector2(this.x, this.y);
     return this.getCenter();
   }
 
@@ -81,37 +70,11 @@ class Hero extends Phaser.Physics.Arcade.Sprite {
   }
 
   setNewPath() {
-    // if (this.returningHome) {
-    // this.homeReached();
-    // } else {
     if (this.inDisgrace) {
       this.getPath(this.scene.player.getCenter());
     } else {
       this.getPath(this.randomTarget());
     }
-    // }
-    // if (this.hasMetPlayer) {
-    //   this.resetMetPlayer();
-    // } else {
-    //   if (this.inDisgrace) {
-    //     this.getPath(this.scene.player.getCenter());
-    //   } else {
-    //     this.getPath(this.randomTarget());
-    //   }
-    // }
-    // if (this.inDisgrace) {
-    //   if (this.hasMetPlayer) {
-    //     this.revertDisgrace();
-    //     this.getPath(this.randomTarget());
-    //   }
-    //   // else {
-    //   //   this.disgrace();
-    //   //   this.getPath(this.scene.player.getCenter());
-    //   // }
-    // } else {
-    //   // if (this.hasMetPlayer) {
-    //   this.getPath(this.randomTarget());
-    // }
   }
 
   randomTarget() {
@@ -122,15 +85,12 @@ class Hero extends Phaser.Physics.Arcade.Sprite {
   }
 
   getPath(target) {
-    // if (!this.isFleeing) {
     this.resetPath();
 
     // Locations in world coordinates need to be converted to the tilemap index
     const currentLocation = this.worldPosToTile(this.x, this.y);
     const targetLocation = this.worldPosToTile(target.x, target.y);
 
-    // console.log('current loc', currentLocation);
-    // console.log('target loc', targetLocation);
     this.pathId = this.scene.finder.findPath(currentLocation.x, currentLocation.y, targetLocation.x, targetLocation.y, function (path) {
       if (path === null) {
         console.warn(`Path was not found. Target: ${targetLocation.x}, ${targetLocation.y}`);
@@ -142,12 +102,10 @@ class Hero extends Phaser.Physics.Arcade.Sprite {
           this.path.push(this.tileToWorldPos(path[i]));
         }
         this.path.push(target);
-        // this.timePathFound = game.getTime();
       }
     }.bind(this));
 
     this.scene.finder.calculate();
-    // }
   }
 
   resetPath() {
@@ -195,9 +153,6 @@ class Hero extends Phaser.Physics.Arcade.Sprite {
   meetPlayer() {
     this.returningHome = true;
 
-
-    // this.hasMetPlayer = true;
-    // this.isWaiting = true;
     this.speed = 300;
     this.resetPath();
 
@@ -205,12 +160,8 @@ class Hero extends Phaser.Physics.Arcade.Sprite {
     // this.speechBubble();
 
     // Pause before moving again
-    // this.setVelocity(0);
     this.pauseMovement();
     this.getPath(this.home);
-    // this.returnHome
-    // this.scene.time.delayedCall(1000, this.returnHome, [], this);
-    // this.scene.time.delayedCall(1000, this.getPath, [this.home], this);
 
     if (this.inDisgrace) {
       return 0;
@@ -232,22 +183,11 @@ class Hero extends Phaser.Physics.Arcade.Sprite {
     this.isWaiting = false;
   }
 
-  // returnHome() {
-  //   // this.isWaiting = false;
-  //   this.returningHome = true;
-  //   this.getPath(this.home);
-  // }
-
   homeReached() {
     this.returningHome = false;
-    // this.hasMetPlayer = false;
+    
     // Always disgrace the hero when they return home
     this.disgrace();
-    // if (this.scene.chorus) {
-    //   this.disgrace();
-    // } else {
-    //   this.switchState();
-    // } 
   }
 
   setHome(x, y) {
@@ -284,19 +224,10 @@ class Hero extends Phaser.Physics.Arcade.Sprite {
   disgrace() {
     this.resetPath();
     this.inDisgrace = true;
-    // this.value = 0 //-100;
+    
     // do better than a tint!
     this.setTint(0xff6666);
     this.speed = 230;
-    // lyd
-    // igg
-    // kan
-    // mar
-    // elv
-    // gig
-    // axl
-    // dep
-    // bra
   }
 
   revertDisgrace() {
@@ -304,9 +235,7 @@ class Hero extends Phaser.Physics.Arcade.Sprite {
     this.inDisgrace = false;
     this.returningHome = false;
     this.resetPath();
-    // this.value = 10;
     this.clearTint();
-    // this.resetOnMeet = false; // The delayed call in meetPlayer may call disgrace() soon after this is called, use the flag to stop that
     this.speed = 160;
     this.isWaiting = false;
   }
@@ -328,45 +257,6 @@ class Hero extends Phaser.Physics.Arcade.Sprite {
       this.revertDisgrace();
     }
   }
-
-  // resetMetPlayer() {
-  //   if (this.resetOnMeet) {
-  //     this.disgrace();
-  //   } else {
-  //     this.resetOnMeet = true;
-  //   }
-
-  //   this.hasMetPlayer = false;
-  //   this.speed = 200;
-  // }
-
-  // displayScore(x, y, score, delay = 0) {
-  //   if (score == 0) {
-  //     return;
-  //   }
-  //   var text = score > 0 ? `+${score}` : `${score}`;
-  //   var bmt = this.scene.add.bitmapText(x, y, 'mont', text, 24).setOrigin(0.5, 0.5).setTint(0xffff00).setDepth(20).setVisible(false);
-
-  //   this.scene.tweens.addCounter({
-  //     from: 2,
-  //     to: 0.0,
-  //     delay: delay,
-  //     duration: 2500,
-  //     onStart: function () {
-  //       bmt.setVisible(true)
-  //     },
-  //     onUpdate: function (tween) {
-  //       bmt.y -= 0.5;
-  //       // Only starts fading once half way through tween, can this be done better?
-  //       if (tween.getValue() <= 1.0) {
-  //         bmt.setAlpha(tween.getValue());
-  //       }
-  //     },
-  //     onComplete: function (tween) {
-  //       bmt.destroy();
-  //     }
-  //   });
-  // }
 }
 
 export default Hero;
