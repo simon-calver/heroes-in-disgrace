@@ -37,8 +37,8 @@ class Hero extends Phaser.Physics.Arcade.Sprite {
     this.setVelocityX(this.speed * Math.cos(this.targetAngle)); // In pixels per second
     this.setVelocityY(this.speed * Math.sin(this.targetAngle));
 
-    // Remove this path element once we are sufficiently close to it (10 is a bit arbitrary but works well enough for now)
-    if (Phaser.Math.Distance.BetweenPoints(this.getPosition(), this.path[0]) < 10) {
+    // Remove this path element once we are sufficiently close to it 
+    if (Phaser.Math.Distance.BetweenPoints(this.getPosition(), this.path[0]) < 20) {
       this.path.shift();
     }
 
