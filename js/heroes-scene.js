@@ -291,7 +291,14 @@ export default class HeroesScene extends Phaser.Scene {
       this.playerScene.endGame();
     }, this);
 
-    this.song.play();
+    // Check song is unlocked before playing, should avoid error?
+    if (!this.song.locked) {
+      this.song.play();
+    } else {
+      this.song.once('unlocked', function () {
+        this.song.play();
+      }, this);
+    }
     if (muteSong) {
       this.song.setVolume(0);
     }

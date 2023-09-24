@@ -36,7 +36,7 @@ export default class PlayerScene extends Phaser.Scene {
     this.songComplete = false;
     this.gamePaused = true;
 
-    // Stop sound pausing when loose focus, will this work for all OS?
+    // Stop sound pausing when lose focus, this will be handled by the loseFocus function
     this.sound.pauseOnBlur = false;
     this.sound.unlock();//???????????????????????????????? To fix IoS error?
 
@@ -49,6 +49,19 @@ export default class PlayerScene extends Phaser.Scene {
     document.getElementById('leaderboard').addEventListener('click', () =>
       this.launchMenuScene('MenuScene', 'high_scores')
     );
+    this.game.events.on('blur', function () {
+      this.loseFocus();
+    }, this);
+    this.game.events.on('focus', function () {
+      this.gainFocus();
+    }, this);
+    document.addEventListener('visibilitychange', function () {
+      if (document.visibilityState === 'hidden') {
+        this.loseFocus();
+      } else {
+        this.gainFocus();
+      }
+    }.bind(this));
 
     this.addMenuBars();
     this.pauseGame();
@@ -94,6 +107,14 @@ export default class PlayerScene extends Phaser.Scene {
     }, this);
 
     this.blurPlugin = this.plugins.get('rexkawaseblurpipelineplugin');
+  }
+
+  loseFocus() {
+    if (!this.gamePaused) this.pauseGame();
+  }
+
+  gainFocus() {
+    // if (this.gamePaused) this.resumeGame();
   }
 
   addMenuBars() {
@@ -218,7 +239,7 @@ export default class PlayerScene extends Phaser.Scene {
     // Make other HTML elements invisible
     if (this.nameform) this.nameform.setVisible(false);
 
-    // If menu scene is already running use pasuse status from that
+    // If menu scene is already running use pause status from that
     let wasPaused;
     if (this.scene.isActive('MenuScene')) {
       wasPaused = this.scene.get('MenuScene').wasPaused;
