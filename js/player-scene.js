@@ -55,6 +55,7 @@ export default class PlayerScene extends Phaser.Scene {
     this.game.events.on('focus', function () {
       this.gainFocus();
     }, this);
+    // This does the same as the above, but this should ensure it works the same on different OS
     document.addEventListener('visibilitychange', function () {
       if (document.visibilityState === 'hidden') {
         this.loseFocus();
