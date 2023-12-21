@@ -40,10 +40,10 @@ export default class HeroesScene extends Phaser.Scene {
 
   create(params = { 'pauseAtStart': true, 'muteSong': false, 'firstGame': false }) {
     // for testing!!
-    this.resetKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
-    this.resetKey.on('down', function (event) {
-      this.nextLevel();
-    }, this);
+    // this.resetKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+    // this.resetKey.on('down', function (event) {
+    //   this.nextLevel();
+    // }, this);
 
 
     this.setupSong(params['muteSong']);
